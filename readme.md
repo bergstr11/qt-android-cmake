@@ -59,7 +59,6 @@ First, you must make sure that the following environment variables are defined:
 Additionally you can define the following ones, but you can also define them as CMake variables if you prefer:
 
 * ```ANDROID_SDK```: root directory of the Android SDK
-* ```ANT```: Path of the ANT executable
 
 You can then run CMake:.
 
@@ -102,6 +101,20 @@ add_qt_android_apk(my_app_apk my_app
 )
 ```
 
+### VERSION_CODE
+
+The internal version of the application. It must be a single number, incremented everytime your app is updated on the play store (otherwise it has no importance). If not given, the number 1 is used.
+
+Note that the public version of the application, which is a different thing, is taken from the VERSION property of the CMake target. If none is provided, the VERSION_CODE number is used.
+
+Example:
+
+```cmake
+add_qt_android_apk(my_app_apk my_app
+    VERSION_CODE 6
+)
+```
+
 ### PACKAGE_NAME
 
 The name of the application package. If not given, "org.qtproject.${source_target}" , where source_target is the name of the source target, is taken.
@@ -125,6 +138,20 @@ Example:
 ```cmake
 add_qt_android_apk(my_app_apk my_app
     PACKAGE_SOURCES ${CMAKE_CURRENT_LIST_DIR}/my-android-sources
+)
+```
+
+### BUILDTOOLS_REVISION
+
+The revision of the Android SDK build tools. This must match a valid sub-folder of your <ANDROID_SDK>/build-tools directory. It seems like it can sometimes be needed, when the system cannot auto-detect it.
+
+Remains empty if not given.
+
+Example:
+
+```cmake
+add_qt_android_apk(my_app_apk my_app
+    BUILDTOOLS_REVISION "23.0.3"
 )
 ```
 
